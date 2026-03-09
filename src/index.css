@@ -1,0 +1,266 @@
+/* =============================
+   CSS Custom Properties
+   ============================= */
+:root {
+  --color-bg: #fdf9f5;
+  --color-bg-alt: #ffffff;
+  --color-bg-dark: #1a110a;
+  --color-text: #1e1208;
+  --color-text-muted: #7a6555;
+  --color-text-light: #fdf9f5;
+  --color-accent: #6FB7DB;
+  --color-accent-hover: #58a6ce;
+  --color-accent-light: #e8f5fc;
+  --color-accent-brown: #914C07;
+  --color-accent-brown-hover: #7a3f06;
+  --color-accent-brown-light: #fbeee0;
+  --color-border: #e8ddd4;
+  --color-card-bg: #ffffff;
+  --color-tag-bg: #f5ede4;
+
+  --font-display: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  --transition: 0.25s ease;
+
+  --max-width: 1100px;
+  --section-pad: 96px 24px;
+}
+
+/* =============================
+   Reset & Base
+   ============================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =============================
+   Utility
+   ============================= */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-accent-brown);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  max-width: 560px;
+}
+
+/* =============================
+   Buttons
+   ============================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(111, 183, 219, 0.45);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-text-light);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn-outline-dark:hover {
+  background: var(--color-accent-light);
+  transform: translateY(-2px);
+}
+
+/* =============================
+   Scroll fade-in animation
+   ============================= */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================
+   Page-wide fixed stripes
+   ============================= */
+.page-stripes {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.page-stripe-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 40px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--color-accent) 0px,
+    var(--color-accent) 18px,
+    var(--color-accent-brown) 18px,
+    var(--color-accent-brown) 36px
+  );
+  opacity: 0.7;
+}
+
+.page-stripe-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 24px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--color-accent-brown) 0px,
+    var(--color-accent-brown) 14px,
+    var(--color-accent) 14px,
+    var(--color-accent) 28px
+  );
+  opacity: 0.45;
+}
+
+/* =============================
+   Section blending transitions
+   ============================= */
+
+/* All sections need relative positioning for the ::after overlays */
+.hero, .about, .mangomint, .case-studies, .research, .skills, .personal, .contact {
+  position: relative;
+}
+
+/* Generic fade helper — placed at bottom of each section, bleeds into the next */
+.hero::after,
+.about::after,
+.mangomint::after,
+.case-studies::after,
+.personal::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Hero (bg #fdf9f5) → Mangomint (bg-dark #1a110a) */
+.hero::after {
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, #1a110a);
+}
+
+/* Mangomint (bg-dark #1a110a) → CaseStudies (bg #fdf9f5) */
+.mangomint::after {
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, #fdf9f5);
+}
+
+/* CaseStudies (bg #fdf9f5) → Research (bg-alt #ffffff) */
+.case-studies::after {
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, #ffffff);
+}
+
+/* Personal (bg-alt #ffffff) → Contact (bg-dark #1a110a) */
+.personal::after {
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, #1a110a);
+}
+
+/* =============================
+   Responsive helpers
+   ============================= */
+@media (max-width: 768px) {
+  :root {
+    --section-pad: 64px 20px;
+  }
+
+  .page-stripes {
+    display: none;
+  }
+}

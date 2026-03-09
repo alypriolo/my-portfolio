@@ -1,0 +1,64 @@
+﻿Title,Type,Status,Priority,Sprint,Epic,Tasks,Timeline,Engineers,Description,Front / Back,Property,Sub-Epic,User Type & Page,expected date,front/back end?
+front end login flow (generic for both users),Epic ⛰️,,,,,"create all blank pages for login/signup workflow & name it with a descriptive text box (SMK%20RoadMap/create%20all%20blank%20pages%20for%20login%20signup%20workflow%20&%20dede3eda4b1682cdbb0a013d6bca72c4.csv), add only the MAJOR button components for each page of the LOGIN/SIGNUP flow (SMK%20RoadMap/add%20only%20the%20MAJOR%20button%20components%20for%20each%20page%20b3ae3eda4b1682efb16781dbfe99f0a5.csv)","November 1, 2021 → December 22, 2021",,,,,,,,front end
+"parent user flow ",Epic ⛰️,,,,,,"November 24, 2021 → December 29, 2021",,,,,,,,front end
+"child user flow ",Epic ⛰️,In Progress,,,,"Untitled (https://www.notion.so/ca4fd0a8c1ea46f8afe46a12b1a21307?pvs=21), Untitled (https://www.notion.so/220b8d355d214f55bcc9196d2138613f?pvs=21), Untitled (https://www.notion.so/bc3a06b57a7c4ecdafe38cbc2509cc30?pvs=21), finalize list of badges (SMK%20RoadMap/finalize%20list%20of%20badges%20600e3eda4b1683a9b502816dd2b094b1.csv)","November 10, 2021 → December 29, 2021",,,,,,,,front end
+Connect Transaction with Parent,Task 🔨,Not Started,P4,,,,,"alex, du, nishant",,Back End,,,,"January 19, 2022",back end
+Connect Transaction with Child,Task 🔨,Not Started,P3,,,,,"alex, du, nishant",,Back End,,,,"December 29, 2021",back end
+CRUD Transaction,Task 🔨,Not Started,P1 🔥,,,,,"alex, du, nishant",,Back End,,,,"December 22, 2021",back end
+CRUD Child,Task 🔨,Complete 🙌,P1 🔥,,,,,"alex, du, nishant",,Back End,,,,"December 8, 2021",back end
+Link parent and child,Task 🔨,Not Started,P3,,,,,"alex, du, nishant",,Back End,,,,"January 5, 2022",back end
+CRUD Parent,Task 🔨,Complete 🙌,P2,,,,,du,,Back End,,,,"December 8, 2021",back end
+backend,Epic ⛰️,,,,,,"November 1, 2021 → January 26, 2022",,,,,,,,back end
+Finish baseline backend,Epic ⛰️,In Progress,P1 🔥,,,,"December 21, 2021","alex, du",,,,,,,back end
+bring child workflow's styles up to speed with wireframe designs,,,,Sprint 2,,,,,,,,,,,
+update parent workflow's styles/component to match wireframes,,,,Sprint 3,,,,,,,,,,,
+link parent workflow to backend,,,,Sprint 3,,,,,,,,,,,
+link child front end to backend,,,,Sprint 2,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+finish restructuring of parent workflow's src files,,,,Sprint 3,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+templatize childworkflow's childAnyTransaction to work for all 3 transaction types,Task 🔨,In Progress,P1 🔥,,,,,aly,,Front End,,,,"December 21, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+templatize childworkflow's childAnyBank to work for both user groups,Task 🔨,Complete 🙌,P1 🔥,,,,,ank,,Front End,,,,"December 20, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+create enums for the user groups,Task 🔨,Complete 🙌,P1 🔥,,,,,ank,,Front End,,,,"December 20, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+child login/signup high fidelity wireframes,Task 🔨,In Progress,P2,,,,,grace,,Front End,,,,"December 22, 2021",
+User Testing w/ Trainers,,,,,,Untitled (https://www.notion.so/c4ddc9b71b2a484c83aabc08866bf01c?pvs=21),,,,,,,,,
+create enums for the 3 transation types,Task 🔨,In Progress,P1 🔥,,,,,aly,,Front End,,,,"December 21, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+CRUD Parent,,In Progress,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+firebase ID,Task 🔨,Complete 🙌,P1 🔥,,,,,caleb,,Back End,,,,"November 26, 2021",
+fro,,,,,,,,,,,,,,,
+finalize list of badges,Task 🔨,In Progress,P1 🔥,,child user flow  (SMK%20RoadMap/child%20user%20flow%20081e3eda4b168259b60381008dbf0de6.csv),,,grace,,Front End,,,,"February 2, 2022",
+start building out design/style features of child workflow,Task 🔨,Not Started,P1 🔥,,,,,"caleb, nishant",,Front End,,,,"December 22, 2021",
+Plan out models for the MongoDB database,Task 🔨,Complete 🙌,P1 🔥,,,,,"alex, nishant",,Back End,,,,"November 24, 2021",
+"delete parent workflow's 3 ""Parent<bank type>Bank"" pages ",Task 🔨,Complete 🙌,P1 🔥,,,,,ank,,Front End,,,,"December 20, 2021",
+create all blank pages for parent workflow & name it with a descriptive text box,Task 🔨,Complete 🙌,P1 🔥,,,,,ank,,Front End,,,,"November 24, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+plan out endpoints,Task 🔨,Complete 🙌,P1 🔥,,,,,,,Back End,,,,"December 8, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+file structure for backend,Task 🔨,Complete 🙌,P1 🔥,,,,,alex,,Back End,,,,"December 8, 2021",
+front,,,,,,,,,,,,,,,
+link together the parent pages using navigation algorithms,Task 🔨,Complete 🙌,P1 🔥,,,,,ank,,Front End,,,,"November 24, 2021",
+Reorganize Front End,,,,,,,,,,,,,,,
+add only the MAJOR button components for each page of the parent flow,Task 🔨,Complete 🙌,P1 🔥,,,,,ank,,Front End,,,,"November 24, 2021",
+create all blank pages for child workflow & name it with a descriptive text box,Task 🔨,Complete 🙌,P1 🔥,,,,,aly,,Front End,,,,"November 24, 2021",
+add only the MAJOR button components for each page of the child flow,Task 🔨,Complete 🙌,P1 🔥,,,,,aly,,Front End,,,,"November 24, 2021",
+,Epic ⛰️,,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+link together the child pages using navigation algorithms,Task 🔨,Complete 🙌,P1 🔥,,,,,aly,,Front End,,,,"November 24, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+"link together the login/signup pages ",Task 🔨,Complete 🙌,P1 🔥,,,,,caleb,,Front End,,,,"November 24, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+add only the MAJOR button components for each page of the LOGIN/SIGNUP flow,Task 🔨,Complete 🙌,P1 🔥,Sprint 1,front end login flow (generic for both users) (SMK%20RoadMap/front%20end%20login%20flow%20(generic%20for%20both%20users)%206fae3eda4b1683f3920e018bc6e5014f.csv),,,caleb,,Front End,,,,"November 17, 2021",
+,Task 🔨,,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+create all blank pages for login/signup workflow & name it with a descriptive text box,Task 🔨,Complete 🙌,P1 🔥,Sprint 1,"Untitled (https://www.notion.so/551a7f7e7e94405c98da0518a4e24ad0?pvs=21), front end login flow (generic for both users) (SMK%20RoadMap/front%20end%20login%20flow%20(generic%20for%20both%20users)%206fae3eda4b1683f3920e018bc6e5014f.csv)",,,caleb,,Front End,,,,"November 24, 2021",
+Front End Feature,,,,,,,,,,,,,,,
+Survivor Fitness Overview,,,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,
+,Task 🔨,,,,,,,,,,,,,,

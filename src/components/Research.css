@@ -1,0 +1,223 @@
+.research {
+  padding: var(--section-pad);
+  background: var(--color-bg-alt);
+}
+
+/* ── Header ── */
+.research__header {
+  margin-bottom: 48px;
+}
+
+.research__header .section-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+/* ── Two-column body ── */
+.research__body {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ── Meta row ── */
+.research__meta-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding: 20px 24px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 36px;
+}
+
+.research__meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.research__meta-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.research__meta-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ── Content blocks ── */
+.research__block {
+  margin-bottom: 32px;
+}
+
+.research__block-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-accent-brown);
+  margin-bottom: 12px;
+  padding-left: 12px;
+  border-left: 3px solid var(--color-accent);
+}
+
+.research__block-body {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+.research__block-body strong {
+  color: var(--color-accent-brown);
+  font-weight: 600;
+}
+
+/* ── List ── */
+.research__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.research__list li {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  padding-left: 20px;
+  position: relative;
+}
+
+.research__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-brown);
+}
+
+.research__list li strong {
+  color: var(--color-accent-brown);
+  font-weight: 600;
+}
+
+.research__list li code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85em;
+  background: var(--color-tag-bg);
+  border: 1px solid var(--color-border);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--color-accent-brown);
+}
+
+/* ── Tags ── */
+.research__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.research__tag {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-tag-bg);
+  border: 1px solid var(--color-border);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── PDF card ── */
+.research__pdf-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 96px;
+}
+
+.research__pdf-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+.research__pdf-icon {
+  color: var(--color-accent-brown);
+  display: flex;
+  align-items: center;
+}
+
+.research__pdf-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent-brown);
+}
+
+.research__pdf-embed {
+  width: 100%;
+  height: 600px;
+  border: none;
+  display: block;
+}
+
+.research__pdf-download {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  border-top: 1px solid var(--color-border);
+  transition: background var(--transition);
+}
+
+.research__pdf-download:hover {
+  background: var(--color-accent-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .research__body {
+    grid-template-columns: 1fr;
+  }
+
+  .research__pdf-card {
+    position: static;
+  }
+
+  .research__pdf-embed {
+    height: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .research__meta-row {
+    gap: 20px;
+  }
+
+  .research__pdf-embed {
+    height: 420px;
+  }
+}

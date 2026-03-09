@@ -1,0 +1,102 @@
+.contact {
+  padding: var(--section-pad);
+  background: var(--color-bg-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact__bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(79, 70, 229, 0.2);
+  filter: blur(100px);
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+}
+
+.contact__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.contact__title,
+.contact .section-label {
+  color: var(--color-text-light);
+}
+
+.contact .section-title {
+  color: var(--color-text-light);
+}
+
+.contact__body {
+  color: rgba(241, 245, 249, 0.65);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-top: 8px;
+}
+
+/* Contact cards */
+.contact__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  color: var(--color-text-light);
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.contact-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(6px);
+}
+
+.contact-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: rgba(79, 70, 229, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a5b4fc;
+  flex-shrink: 0;
+}
+
+.contact-card__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(241, 245, 249, 0.45);
+  margin-bottom: 3px;
+}
+
+.contact-card__value {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  word-break: break-all;
+}
+
+@media (max-width: 820px) {
+  .contact__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

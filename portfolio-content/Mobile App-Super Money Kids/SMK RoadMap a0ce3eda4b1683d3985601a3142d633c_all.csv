@@ -1,0 +1,64 @@
+﻿Title,Description,Engineers,Epic,Front / Back,Priority,Property,Sprint,Status,Sub-Epic,Tasks,Timeline,Type,User Type & Page,expected date,front/back end?
+"child user flow ",,,,,,,,In Progress,,"Untitled (https://www.notion.so/ca4fd0a8c1ea46f8afe46a12b1a21307?pvs=21), Untitled (https://www.notion.so/220b8d355d214f55bcc9196d2138613f?pvs=21), Untitled (https://www.notion.so/bc3a06b57a7c4ecdafe38cbc2509cc30?pvs=21), finalize list of badges (SMK%20RoadMap/finalize%20list%20of%20badges%20600e3eda4b1683a9b502816dd2b094b1.csv)","November 10, 2021 → December 29, 2021",Epic ⛰️,,,front end
+"parent user flow ",,,,,,,,,,,"November 24, 2021 → December 29, 2021",Epic ⛰️,,,front end
+front end login flow (generic for both users),,,,,,,,,,"create all blank pages for login/signup workflow & name it with a descriptive text box (SMK%20RoadMap/create%20all%20blank%20pages%20for%20login%20signup%20workflow%20&%20dede3eda4b1682cdbb0a013d6bca72c4.csv), add only the MAJOR button components for each page of the LOGIN/SIGNUP flow (SMK%20RoadMap/add%20only%20the%20MAJOR%20button%20components%20for%20each%20page%20b3ae3eda4b1682efb16781dbfe99f0a5.csv)","November 1, 2021 → December 22, 2021",Epic ⛰️,,,front end
+Finish baseline backend,,"alex, du",,,P1 🔥,,,In Progress,,,"December 21, 2021",Epic ⛰️,,,back end
+backend,,,,,,,,,,,"November 1, 2021 → January 26, 2022",Epic ⛰️,,,back end
+CRUD Parent,,du,,Back End,P2,,,Complete 🙌,,,,Task 🔨,,"December 8, 2021",back end
+Link parent and child,,"alex, du, nishant",,Back End,P3,,,Not Started,,,,Task 🔨,,"January 5, 2022",back end
+,,,,,,,,,,,,Task 🔨,,,
+CRUD Child,,"alex, du, nishant",,Back End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"December 8, 2021",back end
+,,,,,,,,,,,,Task 🔨,,,
+CRUD Transaction,,"alex, du, nishant",,Back End,P1 🔥,,,Not Started,,,,Task 🔨,,"December 22, 2021",back end
+,,,,,,,,,,,,Task 🔨,,,
+Connect Transaction with Child,,"alex, du, nishant",,Back End,P3,,,Not Started,,,,Task 🔨,,"December 29, 2021",back end
+Survivor Fitness Overview,,,,,,,,,,,,,,,
+Connect Transaction with Parent,,"alex, du, nishant",,Back End,P4,,,Not Started,,,,Task 🔨,,"January 19, 2022",back end
+Front End Feature,,,,,,,,,,,,,,,
+create all blank pages for login/signup workflow & name it with a descriptive text box,,caleb,"Untitled (https://www.notion.so/551a7f7e7e94405c98da0518a4e24ad0?pvs=21), front end login flow (generic for both users) (SMK%20RoadMap/front%20end%20login%20flow%20(generic%20for%20both%20users)%206fae3eda4b1683f3920e018bc6e5014f.csv)",Front End,P1 🔥,,Sprint 1,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+,,,,,,,,,,,,Task 🔨,,,
+,,,,,,,,,,,,Task 🔨,,,
+add only the MAJOR button components for each page of the LOGIN/SIGNUP flow,,caleb,front end login flow (generic for both users) (SMK%20RoadMap/front%20end%20login%20flow%20(generic%20for%20both%20users)%206fae3eda4b1683f3920e018bc6e5014f.csv),Front End,P1 🔥,,Sprint 1,Complete 🙌,,,,Task 🔨,,"November 17, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+"link together the login/signup pages ",,caleb,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+link together the child pages using navigation algorithms,,aly,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+,,,,,,,,,,,,Epic ⛰️,,,
+add only the MAJOR button components for each page of the child flow,,aly,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+create all blank pages for child workflow & name it with a descriptive text box,,aly,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+add only the MAJOR button components for each page of the parent flow,,ank,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+Reorganize Front End,,,,,,,,,,,,,,,
+link together the parent pages using navigation algorithms,,ank,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+front,,,,,,,,,,,,,,,
+file structure for backend,,alex,,Back End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"December 8, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+plan out endpoints,,,,Back End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"December 8, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+create all blank pages for parent workflow & name it with a descriptive text box,,ank,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+"delete parent workflow's 3 ""Parent<bank type>Bank"" pages ",,ank,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"December 20, 2021",
+Plan out models for the MongoDB database,,"alex, nishant",,Back End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 24, 2021",
+start building out design/style features of child workflow,,"caleb, nishant",,Front End,P1 🔥,,,Not Started,,,,Task 🔨,,"December 22, 2021",
+finalize list of badges,,grace,child user flow  (SMK%20RoadMap/child%20user%20flow%20081e3eda4b168259b60381008dbf0de6.csv),Front End,P1 🔥,,,In Progress,,,,Task 🔨,,"February 2, 2022",
+fro,,,,,,,,,,,,,,,
+firebase ID,,caleb,,Back End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"November 26, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+CRUD Parent,,,,,,,,In Progress,,,,,,,
+,,,,,,,,,,,,Task 🔨,,,
+create enums for the 3 transation types,,aly,,Front End,P1 🔥,,,In Progress,,,,Task 🔨,,"December 21, 2021",
+User Testing w/ Trainers,,,,,,,,,,Untitled (https://www.notion.so/c4ddc9b71b2a484c83aabc08866bf01c?pvs=21),,,,,
+child login/signup high fidelity wireframes,,grace,,Front End,P2,,,In Progress,,,,Task 🔨,,"December 22, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+create enums for the user groups,,ank,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"December 20, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+templatize childworkflow's childAnyBank to work for both user groups,,ank,,Front End,P1 🔥,,,Complete 🙌,,,,Task 🔨,,"December 20, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+templatize childworkflow's childAnyTransaction to work for all 3 transaction types,,aly,,Front End,P1 🔥,,,In Progress,,,,Task 🔨,,"December 21, 2021",
+,,,,,,,,,,,,Task 🔨,,,
+finish restructuring of parent workflow's src files,,,,,,,Sprint 3,,,,,,,,
+,,,,,,,,,,,,Task 🔨,,,
+link child front end to backend,,,,,,,Sprint 2,,,,,,,,
+link parent workflow to backend,,,,,,,Sprint 3,,,,,,,,
+update parent workflow's styles/component to match wireframes,,,,,,,Sprint 3,,,,,,,,
+bring child workflow's styles up to speed with wireframe designs,,,,,,,Sprint 2,,,,,,,,

@@ -1,0 +1,114 @@
+.skills {
+  padding: var(--section-pad);
+  background: var(--color-bg-alt);
+}
+
+.skills__header {
+  margin-bottom: 56px;
+}
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.skill-group {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.skill-group:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.skill-group--featured {
+  grid-column: span 2;
+  border-color: var(--color-accent-brown);
+  background: var(--color-accent-brown-light);
+}
+
+.skill-group--featured .skill-group__title {
+  font-size: 1.15rem;
+}
+
+.skill-group--featured .skill-chip {
+  background: #fff;
+  border-color: var(--color-accent-brown);
+  color: var(--color-accent-brown);
+}
+
+.skill-group--featured .skill-chip:hover {
+  background: var(--color-accent-brown);
+  color: #fff;
+  border-color: var(--color-accent-brown);
+}
+
+.skill-group--muted {
+  opacity: 0.55;
+}
+
+.skill-group--muted:hover {
+  opacity: 1;
+}
+
+.skill-group__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.skill-group__icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.skill-group__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent-brown);
+}
+
+.skill-group__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-chip {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  padding: 5px 12px;
+  border-radius: 20px;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.skill-chip:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 860px) {
+  .skills__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .skills__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-group--featured {
+    grid-column: span 1;
+  }
+}
