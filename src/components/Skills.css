@@ -1,6 +1,18 @@
 .skills {
   padding: var(--section-pad);
-  background: var(--color-bg-alt);
+  background: var(--color-bg-dark);
+}
+
+.skills .section-label {
+  color: var(--color-accent);
+}
+
+.skills .section-title {
+  color: #fdf9f5;
+}
+
+.skills .section-subtitle {
+  color: rgba(253, 249, 245, 0.6);
 }
 
 .skills__header {
@@ -14,21 +26,21 @@
 }
 
 .skill-group {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
   padding: 28px 24px;
   transition: box-shadow var(--transition), transform var(--transition);
 }
 .skill-group:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   transform: translateY(-4px);
 }
 
 .skill-group--featured {
   grid-column: span 2;
-  border-color: var(--color-accent-brown);
-  background: var(--color-accent-brown-light);
+  border-color: rgba(145, 76, 7, 0.5);
+  background: rgba(145, 76, 7, 0.15);
 }
 
 .skill-group--featured .skill-group__title {
@@ -36,9 +48,9 @@
 }
 
 .skill-group--featured .skill-chip {
-  background: #fff;
-  border-color: var(--color-accent-brown);
-  color: var(--color-accent-brown);
+  background: rgba(145, 76, 7, 0.2);
+  border-color: rgba(145, 76, 7, 0.5);
+  color: #e8c49a;
 }
 
 .skill-group--featured .skill-chip:hover {
@@ -71,7 +83,7 @@
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
-  color: var(--color-accent-brown);
+  color: var(--color-accent);
 }
 
 .skill-group__list {
@@ -84,15 +96,15 @@
 .skill-chip {
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--color-text);
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
+  color: rgba(253, 249, 245, 0.8);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 5px 12px;
   border-radius: 20px;
   transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
 .skill-chip:hover {
-  background: var(--color-accent-light);
+  background: rgba(111, 183, 219, 0.2);
   color: var(--color-accent);
   border-color: var(--color-accent);
 }

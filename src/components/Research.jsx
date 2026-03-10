@@ -25,10 +25,11 @@ export default function Research() {
           </p>
         </div>
 
+        <div className="research__panel fade-in">
         <div className="research__body">
 
           {/* Left: overview + details */}
-          <div className="research__left fade-in">
+          <div className="research__left">
             <div className="research__meta-row">
               <div className="research__meta-item">
                 <span className="research__meta-label">Principal Investigator</span>
@@ -77,7 +78,7 @@ export default function Research() {
           </div>
 
           {/* Right: PDF viewer */}
-          <div className="research__right fade-in">
+          <div className="research__right">
             <div className="research__pdf-card">
               <div className="research__pdf-header">
                 <span className="research__pdf-icon">
@@ -104,6 +105,7 @@ export default function Research() {
             </div>
           </div>
 
+        </div>
         </div>
       </div>
     </section>

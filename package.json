@@ -2,6 +2,7 @@
   "name": "my-portfolio",
   "private": true,
   "version": "1.0.0",
+  "homepage": "https://alypriolo.github.io/my-portfolio",
   "type": "module",
   "scripts": {
     "dev": "vite",

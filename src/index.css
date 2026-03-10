@@ -215,9 +215,10 @@ a {
 
 /* Generic fade helper — placed at bottom of each section, bleeds into the next */
 .hero::after,
-.about::after,
 .mangomint::after,
 .case-studies::after,
+.research::after,
+.skills::after,
 .personal::after {
   content: '';
   position: absolute;
@@ -230,25 +231,37 @@ a {
 
 /* Hero (bg #fdf9f5) → Mangomint (bg-dark #1a110a) */
 .hero::after {
-  height: 140px;
+  height: 60px;
   background: linear-gradient(to bottom, transparent, #1a110a);
 }
 
 /* Mangomint (bg-dark #1a110a) → CaseStudies (bg #fdf9f5) */
 .mangomint::after {
-  height: 140px;
+  height: 60px;
   background: linear-gradient(to bottom, transparent, #fdf9f5);
 }
 
 /* CaseStudies (bg #fdf9f5) → Research (bg-alt #ffffff) */
 .case-studies::after {
-  height: 80px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, #ffffff);
+}
+
+/* Research (bg-alt #ffffff) → Skills (bg-dark #1a110a) */
+.research::after {
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, #1a110a);
+}
+
+/* Skills (bg-dark #1a110a) → Personal (bg-alt #ffffff) */
+.skills::after {
+  height: 60px;
   background: linear-gradient(to bottom, transparent, #ffffff);
 }
 
 /* Personal (bg-alt #ffffff) → Contact (bg-dark #1a110a) */
 .personal::after {
-  height: 140px;
+  height: 60px;
   background: linear-gradient(to bottom, transparent, #1a110a);
 }
 
