@@ -1,6 +1,12 @@
 .hero {
   min-height: 100vh;
-  background: var(--color-bg);
+  background: radial-gradient(
+    ellipse 50% 80% at 62% 62%,
+    #bde3f5 0%,
+    #c9e9f7 25%,
+    #f5d4aa 60%,
+    #f0c490 100%
+  );
   display: flex;
   align-items: center;
   padding: 100px 0 60px;
