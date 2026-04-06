@@ -1,139 +1,413 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import './Mangomint.css'
+import { overviewStats, featuredFeatures, carouselFeatures } from './mangomintData'
 
-const features = [
-  {
-    id: 1,
-    name: 'Flows',
-    category: 'Communication Automation',
-    description:
-      'End-to-end communication automation engine with 13 trigger events supporting SMS, email, delays, conditions, and account balance credits. Most popular: Appointment Completed flow for rebooking and retention.',
-    metrics: [
-      { value: '14,000+', label: 'Active flows built' },
-      { value: '$540k+', label: 'Revenue generated (18 mo)' },
-    ],
-    callout: 'One customer generated $11k revenue from flows costing $389 to send.',
-  },
-  {
-    id: 2,
-    name: 'Offers',
-    category: 'Rule-Based Discounting',
-    description:
-      'Flexible discount engine with criteria including first-time clients, specific services, service providers, and minimum sales amounts. Extended with membership-client limits, new-client-only restrictions, and prepayment discounts.',
-    metrics: [
-      { value: '24,000+', label: 'Offers created' },
-      { value: '66%', label: 'Customer base adoption' },
-    ],
-    callout: '23k activated offers across ~3,800 companies.',
-  },
-  {
-    id: 3,
-    name: 'Payroll Processing',
-    category: 'Financial Operations',
-    description:
-      'Full payroll suite including onboarding sync, QuickBooks integration for automatic pay-run syncing, self-serve worker termination, and product commission overrides.',
-    metrics: [
-      { value: '23.1%', label: 'Adoption rate' },
-      { value: '12–14 hrs', label: 'Saved per week (onboarding sync)' },
-    ],
-    callout: '561 product commission overrides created post-launch. Self-serve termination eliminated recurring monthly support tickets.',
-  },
-  {
-    id: 4,
-    name: 'Online Membership & Package Sales',
-    category: 'E-Commerce',
-    description:
-      'Clients can purchase memberships and packages online, view credits, cancel anytime, and sign agreements for compliance, all without staff intervention.',
-    metrics: [
-      { value: '12,000+', label: 'Memberships/packages enabled online' },
-      { value: '29%', label: 'Customer base adoption' },
-    ],
-    callout: null,
-  },
-  {
-    id: 5,
-    name: 'Group Bookings',
-    category: 'Scheduling',
-    description:
-      'Supports up to 5 guests × 4 services each with smart scheduling for concurrent start times and smart provider filtering to prevent double-booking.',
-    metrics: [
-      { value: '41,000+', label: 'Group appointments booked' },
-      { value: 'June 2025', label: 'Launch date' },
-    ],
-    callout: null,
-  },
-  {
-    id: 6,
-    name: 'User Delight & Quality of Life',
-    category: 'Platform Improvements',
-    description:
-      'Shipped a range of improvements: Detailed Receipt Preview, Void Sale Wizard & Partial Reversals, Forms export, Gift Card search, Membership Pause, granular staff permissions, achievements, and peer gifting.',
-    metrics: [
-      { value: '7+', label: 'Features shipped' },
-      { value: '0 tickets', label: 'Monthly support tickets eliminated' },
-    ],
-    callout: null,
-  },
-]
+const BASE = import.meta.env.BASE_URL
 
+function announcementSrc(file) {
+  return `${BASE}${['portfolio pictures', 'announcements', file].map(encodeURIComponent).join('/')}`
+}
+
+// ─── useCountUp ────────────────────────────────────────────────────────────────
+function useCountUp(target, duration = 1200) {
+  const [count, setCount] = useState(0)
+  const elRef = useRef(null)
+
+  useEffect(() => {
+    const el = elRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        observer.disconnect()
+        const start = performance.now()
+        const tick = (now) => {
+          const elapsed = now - start
+          const progress = Math.min(elapsed / duration, 1)
+          const eased = 1 - Math.pow(1 - progress, 3)
+          setCount(Math.floor(eased * target))
+          if (progress < 1) requestAnimationFrame(tick)
+          else setCount(target)
+        }
+        requestAnimationFrame(tick)
+      },
+      { threshold: 0.5 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, duration])
+
+  return { count, elRef }
+}
+
+// ─── StatItem ─────────────────────────────────────────────────────────────────
+function StatItem({ stat }) {
+  const { count, elRef } = useCountUp(stat.isCounter ? stat.value : 0)
+
+  const display = stat.isCounter
+    ? `${stat.prefix ?? ''}${count}${stat.suffix}`
+    : stat.display
+
+  return (
+    <div className="mm-stat" ref={elRef}>
+      <span className="mm-stat__value">{display}</span>
+      <span className="mm-stat__label">{stat.label}</span>
+    </div>
+  )
+}
+
+// ─── StatsBar ─────────────────────────────────────────────────────────────────
+function StatsBar() {
+  return (
+    <div className="mm-stats-bar fade-in">
+      <div className="mm-stats-bar__chips">
+        {overviewStats.map((stat, i) => (
+          <StatItem key={i} stat={stat} />
+        ))}
+      </div>
+      <p className="mm-stats-bar__descriptor">
+        50+ launches spanning Flows, Memberships, Payroll, Gift Cards, Offers, Payments, Forms, and Online Booking — November 2023 through March 2026.
+      </p>
+    </div>
+  )
+}
+
+// ─── FeatureModal ─────────────────────────────────────────────────────────────
+function AnnouncementEmbed({ url, screenshotFile }) {
+  return (
+    <div className="mm-announcement-embed">
+      <p className="mm-modal__sidebar-label">Feature Announcement</p>
+      <div className="mm-announcement-embed__img-wrap">
+        <img
+          src={announcementSrc(screenshotFile)}
+          alt="Feature announcement screenshot"
+          className="mm-announcement-embed__img"
+        />
+      </div>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mm-announcement-embed__link"
+      >
+        Open full announcement ↗
+      </a>
+    </div>
+  )
+}
+
+function FeatureModal({ feature, onClose }) {
+  const scrollYRef = useRef(0)
+
+  useEffect(() => {
+    // iOS-safe scroll lock
+    scrollYRef.current = window.scrollY
+    document.body.style.position = 'fixed'
+    document.body.style.width = '100%'
+    document.body.style.top = `-${scrollYRef.current}px`
+    document.body.style.overflow = 'hidden'
+
+    const onKey = (e) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+
+    return () => {
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+      document.body.style.overflow = ''
+      window.scrollTo(0, scrollYRef.current)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [onClose])
+
+  return (
+    <div className="mm-modal-backdrop" onClick={onClose}>
+      <div className="mm-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="mm-modal__header">
+          <div className="mm-modal__header-top">
+            <span className="mm-modal__category">{feature.category}</span>
+            <button className="mm-modal__close" onClick={onClose} aria-label="Close">✕</button>
+          </div>
+          <h2 className="mm-modal__name">{feature.name}</h2>
+          <p className="mm-modal__tagline">{feature.tagline}</p>
+        </div>
+
+        <div className="mm-modal__body">
+          <div className="mm-modal__main">
+            <div className="mm-modal__section">
+              <h3 className="mm-modal__section-title"><span className="mm-modal__section-num">01</span> Problem</h3>
+              <p className="mm-modal__section-text">{feature.problem}</p>
+            </div>
+            <div className="mm-modal__section">
+              <h3 className="mm-modal__section-title"><span className="mm-modal__section-num">02</span> Solution</h3>
+              <p className="mm-modal__section-text">{feature.solution}</p>
+            </div>
+            <div className="mm-modal__section">
+              <h3 className="mm-modal__section-title"><span className="mm-modal__section-num">03</span> How It Works</h3>
+              <p className="mm-modal__section-text">{feature.howItWorks}</p>
+            </div>
+            <div className="mm-modal__section">
+              <h3 className="mm-modal__section-title"><span className="mm-modal__section-num">04</span> Impact</h3>
+              <div className="mm-modal__kpis">
+                {feature.metrics.map((m) => (
+                  <div key={m.label} className="mm-modal__kpi">
+                    <span className="mm-modal__kpi-value">{m.value}</span>
+                    <span className="mm-modal__kpi-label">{m.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {feature.quote && (
+              <div className="mm-modal__section">
+                <h3 className="mm-modal__section-title"><span className="mm-modal__section-num">05</span> In Their Words</h3>
+                <blockquote className="mm-modal__quote">
+                  <p>"{feature.quote.text}"</p>
+                  <cite>— {feature.quote.attribution}</cite>
+                </blockquote>
+              </div>
+            )}
+          </div>
+
+          {feature.announcementUrl && (
+            <div className="mm-modal__sidebar">
+              <AnnouncementEmbed url={feature.announcementUrl} screenshotFile={feature.screenshotFile} />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── FeaturedCard ─────────────────────────────────────────────────────────────
+function FeaturedCard({ feature, onOpen, index }) {
+  return (
+    <article
+      className="mm-featured-card fade-in"
+      style={{ animationDelay: `${index * 0.1}s` }}
+      onClick={() => onOpen(feature)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && onOpen(feature)}
+    >
+      <span className="mm-featured-card__category">{feature.category}</span>
+      <h3 className="mm-featured-card__name">{feature.name}</h3>
+      <p className="mm-featured-card__tagline">{feature.tagline}</p>
+      <div className="mm-featured-card__metrics">
+        {feature.metrics.map((m) => (
+          <div key={m.label} className="mangomint__metric">
+            <span className="mangomint__metric-value">{m.value}</span>
+            <span className="mangomint__metric-label">{m.label}</span>
+          </div>
+        ))}
+      </div>
+      <span className="mm-featured-card__cta">Deep dive →</span>
+    </article>
+  )
+}
+
+// ─── CarouselCard (flip card) ─────────────────────────────────────────────────
+function CarouselCard({ feature, isFlipped, onFlip }) {
+  const touchStartX = useRef(null)
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return
+    const delta = Math.abs(e.changedTouches[0].clientX - touchStartX.current)
+    touchStartX.current = null
+    if (delta < 8) onFlip() // only flip on tap, not swipe
+  }
+
+  return (
+    <div
+      className={`flip-card${isFlipped ? ' flip-card--flipped' : ''}`}
+      onClick={onFlip}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && onFlip()}
+      aria-label={`${feature.name} — click to see details`}
+    >
+      <div className="flip-card__inner">
+        {/* FRONT */}
+        <div className="flip-card__front">
+          <span className="flip-card__category">{feature.emoji} {feature.category}</span>
+          <h3 className="flip-card__name">{feature.name}</h3>
+          <div className="flip-card__divider" />
+          <p className="flip-card__problem">{feature.problem}</p>
+          <div className="flip-card__front-footer">
+            {feature.announcementUrl && (
+              <a
+                href={feature.announcementUrl}
+                className="flip-card__announce-btn"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                View announcement ↗
+              </a>
+            )}
+            <span className="flip-card__hint">flip for details →</span>
+          </div>
+        </div>
+
+        {/* BACK */}
+        <div className="flip-card__back">
+          <span className="flip-card__category flip-card__category--back">{feature.emoji} {feature.category}</span>
+          <p className="flip-card__how">{feature.howItWorks}</p>
+          {feature.metrics.length > 0 && (
+            <div className="flip-card__metrics">
+              {feature.metrics.map((m) => (
+                <div key={m.label} className="flip-card__metric">
+                  <span className="flip-card__metric-value">{m.value}</span>
+                  <span className="flip-card__metric-label">{m.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {feature.quote && (
+            <p className="flip-card__quote">"{feature.quote}"</p>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Carousel ─────────────────────────────────────────────────────────────────
+function Carousel() {
+  const [flippedIds, setFlippedIds] = useState(new Set())
+  const [canPrev, setCanPrev] = useState(false)
+  const [canNext, setCanNext] = useState(true)
+  const trackRef = useRef(null)
+  const SCROLL_STEP = 280 * 2 // 2 cards at a time
+
+  const updateButtons = useCallback(() => {
+    const t = trackRef.current
+    if (!t) return
+    setCanPrev(t.scrollLeft > 4)
+    setCanNext(t.scrollLeft + t.clientWidth < t.scrollWidth - 4)
+  }, [])
+
+  useEffect(() => {
+    const t = trackRef.current
+    if (!t) return
+    t.addEventListener('scroll', updateButtons, { passive: true })
+    updateButtons()
+    return () => t.removeEventListener('scroll', updateButtons)
+  }, [updateButtons])
+
+  const handleFlip = (id) => setFlippedIds((prev) => {
+    const next = new Set(prev)
+    next.has(id) ? next.delete(id) : next.add(id)
+    return next
+  })
+
+  const scrollPrev = () => trackRef.current?.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' })
+  const scrollNext = () => trackRef.current?.scrollBy({ left: SCROLL_STEP, behavior: 'smooth' })
+
+  return (
+    <div className="mm-carousel">
+      <div className="mm-carousel__controls">
+        <button
+          className="mm-carousel__btn"
+          onClick={scrollPrev}
+          disabled={!canPrev}
+          aria-label="Previous"
+        >←</button>
+        <button
+          className="mm-carousel__btn"
+          onClick={scrollNext}
+          disabled={!canNext}
+          aria-label="Next"
+        >→</button>
+      </div>
+      <div className="mm-carousel__track-wrap">
+        <div className="mm-carousel__track" ref={trackRef}>
+          {carouselFeatures.map((f) => (
+            <CarouselCard
+              key={f.id}
+              feature={f}
+              isFlipped={flippedIds.has(f.id)}
+              onFlip={() => handleFlip(f.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Mangomint (root) ─────────────────────────────────────────────────────────
 export default function Mangomint() {
-  const ref = useRef(null)
+  const sectionRef = useRef(null)
+  const [activeFeature, setActiveFeature] = useState(null)
+
+  const handleOpen = useCallback((feature) => setActiveFeature(feature), [])
+  const handleClose = useCallback(() => setActiveFeature(null), [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.toggle('visible', e.isIntersecting)),
-      { threshold: 0.1 }
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible')
+            observer.unobserve(e.target)
+          }
+        }),
+      { threshold: 0.12 }
     )
-    ref.current?.querySelectorAll('.fade-in').forEach((el) => observer.observe(el))
+    sectionRef.current?.querySelectorAll('.fade-in').forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section className="mangomint" id="mangomint" ref={ref}>
+    <section className="mangomint" id="mangomint" ref={sectionRef}>
       <div className="container">
-
+        {/* Header */}
         <div className="mangomint__header fade-in">
           <div className="mangomint__company-row">
             <span className="mangomint__company-badge">Mangomint</span>
-            <span className="mangomint__role-pill">Product Manager</span>
+            <span className="mangomint__role-pill">Product Manager · Nov 2023–Present</span>
           </div>
-          <h2 className="mangomint__title">Products I've shipped in production</h2>
+          <h2 className="mangomint__title">Two years of shipping in production</h2>
           <p className="mangomint__subtitle">
-            Building core features across scheduling, payments, automation, and operations
-            for a leading salon &amp; spa software platform.
+            Sole PM across two product teams at a leading salon &amp; spa software platform —
+            owning strategy, discovery, and delivery from 0 to launch.
           </p>
         </div>
 
-        <div className="mangomint__grid">
-          {features.map((f, i) => (
-            <article
-              key={f.id}
-              className="mangomint__card fade-in"
-              style={{ animationDelay: `${i * 0.08}s` }}
-            >
-              <div className="mangomint__card-top">
-                <span className="mangomint__card-category">{f.category}</span>
-              </div>
-              <h3 className="mangomint__card-name">{f.name}</h3>
-              <p className="mangomint__card-desc">{f.description}</p>
+        {/* Stats Bar */}
+        <StatsBar />
 
-              <div className="mangomint__card-metrics">
-                {f.metrics.map((m) => (
-                  <div key={m.label} className="mangomint__metric">
-                    <span className="mangomint__metric-value">{m.value}</span>
-                    <span className="mangomint__metric-label">{m.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              {f.callout && (
-                <blockquote className="mangomint__callout">{f.callout}</blockquote>
-              )}
-            </article>
-          ))}
+        {/* Featured launches */}
+        <div className="mm-featured fade-in">
+          <h3 className="mm-section-heading">Featured launches</h3>
+          <div className="mm-featured__grid">
+            {featuredFeatures.map((f, i) => (
+              <FeaturedCard key={f.id} feature={f} onOpen={handleOpen} index={i} />
+            ))}
+          </div>
         </div>
 
+        {/* Carousel */}
+        <div className="mm-carousel-section fade-in">
+          <h3 className="mm-section-heading">More features I shipped</h3>
+          <p className="mm-carousel-section__sub">
+            Click any card to flip and see how it works, KPIs, and the announcement.
+          </p>
+          <Carousel />
+        </div>
       </div>
+
+      {/* Feature Modal */}
+      {activeFeature && (
+        <FeatureModal feature={activeFeature} onClose={handleClose} />
+      )}
     </section>
   )
 }

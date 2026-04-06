@@ -37,6 +37,14 @@ const albums = [
       { file: 'IMG_7059.JPG', type: 'image' },
       { file: 'IMG_7060.JPG', type: 'image' },
       { file: 'IMG_7061.JPG', type: 'image' },
+      { file: 'IMG_8399.JPG', type: 'image' },
+      { file: 'IMG_8401.JPG', type: 'image' },
+      { file: 'IMG_8402.JPG', type: 'image' },
+      { file: 'IMG_8405.JPG', type: 'image' },
+      { file: 'IMG_8406.JPG', type: 'image' },
+      { file: 'IMG_8410.jpeg', type: 'image' },
+      { file: 'IMG_8418.JPG', type: 'image' },
+      { file: 'IMG_8424.JPG', type: 'image' },
     ],
   },
   {
@@ -63,6 +71,7 @@ const albums = [
       { file: 'IMG_6623.jpg', type: 'image' },
       { file: 'IMG_6682.jpg', type: 'image' },
       { file: 'IMG_6918.jpg', type: 'image' },
+      { file: '71BB0156-6DC6-4913-9950-AA852CD1772B.JPG', type: 'image' },
     ],
   },
   {

@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import './CaseStudies.css'
 
+const BASE = import.meta.env.BASE_URL
+
 const projects = [
   {
     id: 2,
+    year: '2023',
+    shortType: 'Web App',
+    summary: 'A peer-review platform for Vanderbilt courses: search by department, rate quality, difficulty, workload, and more. Won 2nd place at the Vanderbilt CS Immersion competition.',
     label: 'Web App',
     accent: '#914C07',
     title: 'RateMyClass',
@@ -59,13 +64,16 @@ const projects = [
   },
   {
     id: 1,
+    year: '2023',
+    shortType: 'iOS App',
+    summary: 'A cross-platform digital piggy bank teaching kids in underrepresented communities to save, spend, and share, with goal tracking, badges, and a parent dashboard.',
     label: 'Mobile App',
     accent: '#6FB7DB',
     title: 'Super Money Kids',
     role: 'Product Manager + Frontend Developer',
     context: 'Vanderbilt Change++ Program · Partnership with SuperMoneyKids stakeholders',
     links: [
-      { label: 'Stakeholder Site', href: 'https://supermoneykids.co/' },
+      { label: 'Stakeholder Site', href: 'https://supermoneykids.co/', primary: true },
       { label: 'Final Presentation', href: 'https://docs.google.com/presentation/d/1TPqsDOrlX91eEmCKq_RhUIS7RF4VQf-dpRXKwijbrEw/edit?usp=sharing' },
     ],
     problem: 'Children in underrepresented communities in Nashville lack access to engaging financial education. There was no digital tool to teach kids the habit of allocating money into Save, Spend, and Share buckets, and no easy way for parents to supervise and reinforce those habits.',
@@ -109,6 +117,9 @@ const projects = [
   },
   {
     id: 3,
+    year: '2024',
+    shortType: 'Web App',
+    summary: 'A proof-of-concept luxury interior design concierge: one contact for design curation, vendor sourcing, procurement, and full delivery coordination.',
     label: 'Business · Prototype',
     accent: '#B07D4F',
     title: 'Elevated Living Design & Concierge',
@@ -155,6 +166,61 @@ const projects = [
       { title: 'Live Site', src: 'https://alypriolo.github.io/elevatedlivingdesign/', desktopPreview: true, externalLink: 'https://alypriolo.github.io/elevatedlivingdesign/' },
     ],
   },
+  {
+    id: 4,
+    year: '2023',
+    shortType: 'Python ML Research',
+    summary: 'Undergraduate research on making neural network uncertainty interpretable by computing diagonal Laplace approximations over full ResNet18 weights using PyTorch and BackPACK.',
+    label: 'Research',
+    accent: '#5A7A9F',
+    title: 'Bayesian Neural Network Research Assistant',
+    role: 'Undergraduate Research Assistant',
+    context: 'Vanderbilt University · Department of Computer Science · Spring 2023',
+    links: [
+      { label: 'View Paper', href: `${BASE}Research_Documentation_Bayesian_Neural_Networks.pdf`, primary: true },
+    ],
+    problem: 'Deep learning models produce predictions without conveying how confident they are, making them difficult to trust in high-stakes settings. Bayesian neural networks address this, but making their uncertainty interpretable and visual remained an open challenge in Dr. Matthew Berger\'s research lab at Vanderbilt.',
+    solution: 'Computed a diagonal Laplace approximation over all weights in a ResNet18 trained on Places365, generated posterior samples, and used entropy as an uncertainty metric. Images were ranked by uncertainty and compared against human judgment to evaluate model calibration.',
+    userStories: [
+      { persona: 'Researcher', story: 'I want to quantify uncertainty across all model weights, not just the final layer, so I get a more complete picture of model confidence.' },
+      { persona: 'Researcher', story: 'I want to rank images by model uncertainty so I can compare predictions to human judgment and evaluate calibration.' },
+    ],
+    approach: [
+      'Studied Bayesian Neural Networks, Laplace transformations, and PyTorch tensors from scratch, entering a domain entirely new to me.',
+      'Trained a ResNet18 model on a subset of the Places365 scene dataset, adapting from the original pretrained model when compatibility issues arose.',
+      'Computed a diagonal Laplace approximation using BackPACK and Laplace libraries, specifying a diagonal Hessian structure to capture full-network uncertainty.',
+      'Solved a key technical blocker: the Laplace library\'s parameters_to_vector() output wasn\'t compatible with the model call signature. Implemented vector_to_parameters() to correctly reconstruct and load parameter dictionaries into the model.',
+      'Generated posterior samples from the Laplace approximation and saved 3D probability tensors to disk for downstream analysis.',
+      'Built a prediction pipeline that loops over images, averages class probabilities across sampled models, and computes entropy as an uncertainty metric.',
+      'Ranked images by decreasing entropy and compared top-5 highest-uncertainty predictions to human judgment to evaluate model accuracy.',
+    ],
+    techStack: {
+      'Core': ['Python', 'PyTorch'],
+      'Libraries': ['BackPACK', 'Laplace Library'],
+      'Dataset / Models': ['Places365', 'ResNet18'],
+      'Concepts': ['Bayesian Inference', 'Laplace Approximation', 'Neural Networks'],
+    },
+    product: [
+      'Diagonal Laplace approximation over full ResNet18 network weights (not just last layer)',
+      'Posterior sampling pipeline generating 3D probability tensors saved to disk',
+      'Per-image entropy computation as a calibrated uncertainty metric',
+      'Image ranking system by decreasing uncertainty for human evaluation',
+      'Compatibility fix bridging Laplace library output with PyTorch model call signature',
+    ],
+    impact: [
+      { value: 'Spring 2023', label: 'Semester-long research at Vanderbilt' },
+      { value: 'Full-network', label: 'Uncertainty across all model weights, not just last layer' },
+      { value: 'Dr. Berger', label: 'Contributed to PI\'s ongoing Bayesian NN research' },
+    ],
+    embeds: [
+      {
+        title: 'Research Documentation',
+        src: `${BASE}Research_Documentation_Bayesian_Neural_Networks.pdf`,
+        isPDF: true,
+        externalLink: `${BASE}Research_Documentation_Bayesian_Neural_Networks.pdf`,
+      },
+    ],
+  },
 ]
 
 function ExternalLinkIcon() {
@@ -165,8 +231,37 @@ function ExternalLinkIcon() {
   )
 }
 
+function ChevronIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
 function EmbedBlock({ embed: e }) {
   const [active, setActive] = useState(!e.thumbnail)
+  if (e.isPDF) {
+    return (
+      <div className="cs-embed cs-embed--pdf">
+        <p className="cs-embed__label">{e.title}</p>
+        <div className="cs-embed__frame-wrap">
+          <iframe
+            src={e.src}
+            className="cs-embed__frame cs-embed__frame--pdf"
+            title={e.title}
+          />
+          {e.externalLink && (
+            <a href={e.externalLink} target="_blank" rel="noopener noreferrer" className="cs-embed__open-btn" aria-label={`Open ${e.title} in new tab`}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-3M9 2h5m0 0v5m0-5L7 10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+          )}
+        </div>
+      </div>
+    )
+  }
   const cls = `cs-embed${e.tall ? ' cs-embed--tall' : ''}${e.desktopPreview ? ' cs-embed--desktop-preview' : ''}${e.linkedIn ? ' cs-embed--linkedin' : ''}`
   return (
     <div className={cls}>
@@ -192,168 +287,136 @@ function EmbedBlock({ embed: e }) {
   )
 }
 
-function CaseStudyFull({ p }) {
+function ProjectCardExpanded({ p }) {
   const sidebarEmbeds = p.embeds ?? []
-  const fullWidthEmbeds = []
 
   return (
-    <article className="cs-panel" style={{ '--cs-accent': p.accent }}>
-      {/* ── Header ── */}
-      <header className="cs-panel__header">
-        <div className="cs-panel__header-left">
-          <span className="cs-panel__label">{p.label}</span>
-          <h3 className="cs-panel__title">{p.title}</h3>
-          <p className="cs-panel__context">{p.context}</p>
-          {p.award && <p className="cs-panel__award">{p.award}</p>}
-          <p className="cs-panel__role"><strong>Role:</strong> {p.role}</p>
+    <div className="cs-panel__body">
+      <div className="cs-panel__content">
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">01</span> Problem</h4>
+          <p className="cs-section__body">{p.problem}</p>
         </div>
-        <div className="cs-panel__links">
-          {p.links.map((l) => (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className={`cs-panel__link${l.primary ? ' cs-panel__link--primary' : ''}`}>
-              {l.label} <ExternalLinkIcon />
-            </a>
-          ))}
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">02</span> Solution</h4>
+          <p className="cs-section__body">{p.solution}</p>
         </div>
-      </header>
-
-      {/* ── Body: content + embeds ── */}
-      <div className="cs-panel__body">
-        <div className="cs-panel__content">
-
-          {/* Problem */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">01</span> Problem
-            </h4>
-            <p className="cs-section__body">{p.problem}</p>
-          </div>
-
-          {/* Solution */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">02</span> Solution
-            </h4>
-            <p className="cs-section__body">{p.solution}</p>
-          </div>
-
-          {/* User Stories */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">03</span> User Stories
-            </h4>
-            <ul className="cs-stories">
-              {p.userStories.map((s, i) => (
-                <li key={i} className="cs-story">
-                  <span className="cs-story__persona">{s.persona}</span>
-                  <span className="cs-story__text">"{s.story}"</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Approach */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">04</span> Approach
-            </h4>
-            <ul className="cs-list">
-              {p.approach.map((a, i) => <li key={i}>{a}</li>)}
-            </ul>
-          </div>
-
-          {/* Tech Stack */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">05</span> Tech Stack
-            </h4>
-            {Array.isArray(p.techStack) ? (
-              <div className="cs-tags">
-                {p.techStack.map((t) => (
-                  <span key={t} className="cs-tag">{t}</span>
-                ))}
-              </div>
-            ) : (
-              <div className="cs-techstack-groups">
-                {Object.entries(p.techStack).map(([group, items]) => (
-                  <div key={group} className="cs-techstack-group">
-                    <span className="cs-techstack-group__label">{group}</span>
-                    <div className="cs-tags">
-                      {items.map((t) => (
-                        <span key={t} className="cs-tag">{t}</span>
-                      ))}
-                    </div>
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">03</span> User Stories</h4>
+          <ul className="cs-stories">
+            {p.userStories.map((s, i) => (
+              <li key={i} className="cs-story">
+                <span className="cs-story__persona">{s.persona}</span>
+                <span className="cs-story__text">"{s.story}"</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">04</span> Approach</h4>
+          <ul className="cs-list">
+            {p.approach.map((a, i) => <li key={i}>{a}</li>)}
+          </ul>
+        </div>
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">05</span> Tech Stack</h4>
+          {Array.isArray(p.techStack) ? (
+            <div className="cs-tags">
+              {p.techStack.map((t) => <span key={t} className="cs-tag">{t}</span>)}
+            </div>
+          ) : (
+            <div className="cs-techstack-groups">
+              {Object.entries(p.techStack).map(([group, items]) => (
+                <div key={group} className="cs-techstack-group">
+                  <span className="cs-techstack-group__label">{group}</span>
+                  <div className="cs-tags">
+                    {items.map((t) => <span key={t} className="cs-tag">{t}</span>)}
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Product */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">06</span> Product
-            </h4>
-            <ul className="cs-list">
-              {p.product.map((f, i) => <li key={i}>{f}</li>)}
-            </ul>
-          </div>
-
-          {/* Impact */}
-          <div className="cs-section">
-            <h4 className="cs-section__title">
-              <span className="cs-section__num">07</span> Impact
-            </h4>
-            <div className="cs-impact">
-              {p.impact.map((m) => (
-                <div key={m.label} className="cs-impact__stat">
-                  <span className="cs-impact__value">{m.value}</span>
-                  <span className="cs-impact__label">{m.label}</span>
                 </div>
               ))}
             </div>
-          </div>
-
+          )}
         </div>
-
-        {/* Sidebar embeds */}
-        {sidebarEmbeds.length > 0 && (
-          <aside className="cs-panel__embeds">
-            {sidebarEmbeds.map((e) => (
-              <EmbedBlock key={e.title} embed={e} />
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">06</span> Product</h4>
+          <ul className="cs-list">
+            {p.product.map((f, i) => <li key={i}>{f}</li>)}
+          </ul>
+        </div>
+        <div className="cs-section">
+          <h4 className="cs-section__title"><span className="cs-section__num">07</span> Impact</h4>
+          <div className="cs-impact">
+            {p.impact.map((m) => (
+              <div key={m.label} className="cs-impact__stat">
+                <span className="cs-impact__value">{m.value}</span>
+                <span className="cs-impact__label">{m.label}</span>
+              </div>
             ))}
-          </aside>
-        )}
-      </div>
-
-      {/* Full-width embeds */}
-      {fullWidthEmbeds.length > 0 && (
-        <div className="cs-panel__embeds-fullwidth">
-          {fullWidthEmbeds.map((e) => (
-            <EmbedBlock key={e.title} embed={e} />
-          ))}
+          </div>
         </div>
+      </div>
+      {sidebarEmbeds.length > 0 && (
+        <aside className="cs-panel__embeds">
+          {sidebarEmbeds.map((e) => <EmbedBlock key={e.title} embed={e} />)}
+        </aside>
       )}
-    </article>
+    </div>
   )
 }
 
-function CaseStudyStub({ p }) {
+function ProjectCard({ p }) {
+  const [expanded, setExpanded] = useState(false)
+  const primaryLink = p.links.find((l) => l.primary) ?? p.links[0]
+
   return (
-    <article className="cs-stub" style={{ '--cs-accent': p.accent }}>
-      <div className="cs-stub__left">
-        <span className="cs-stub__label">{p.label}</span>
-        <h3 className="cs-stub__title">{p.title}</h3>
-        <p className="cs-stub__context">{p.context}</p>
-        <p className="cs-stub__role"><strong>Role:</strong> {p.role}</p>
+    <div
+      className={`project-card${expanded ? ' project-card--expanded' : ''}`}
+      style={{ '--cs-accent': p.accent }}
+    >
+      {/* ── Tab row (always visible) ── */}
+      <div
+        className="project-card__tab"
+        onClick={() => setExpanded((e) => !e)}
+        role="button"
+        tabIndex={0}
+        aria-expanded={expanded}
+        onKeyDown={(e) => e.key === 'Enter' && setExpanded((prev) => !prev)}
+      >
+        <div className="project-card__tab-left">
+          <span className="project-card__type">{p.shortType}</span>
+          <h3 className="project-card__title">{p.title}</h3>
+        </div>
+        <div className="project-card__tab-right">
+          <span className="project-card__year">{p.year}</span>
+          {primaryLink && (
+            <a
+              href={primaryLink.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-card__link"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {primaryLink.label} <ExternalLinkIcon />
+            </a>
+          )}
+          <span className="project-card__chevron">
+            <ChevronIcon />
+          </span>
+        </div>
       </div>
-      <div className="cs-stub__links">
-        {p.links.map((l) => (
-          <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" className="cs-panel__link">
-            {l.label} <ExternalLinkIcon />
-          </a>
-        ))}
+
+      {/* ── Hover peek (summary, hidden when expanded) ── */}
+      <div className="project-card__peek">
+        <p className="project-card__peek-text">{p.summary}</p>
       </div>
-    </article>
+
+      {/* ── Expandable body ── */}
+      <div className="project-card__body">
+        <div className="project-card__body-inner">
+          <ProjectCardExpanded p={p} />
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -382,8 +445,8 @@ export default function CaseStudies() {
 
         <div className="case-studies__list">
           {projects.map((p, i) => (
-            <div key={p.id} className="fade-in" style={{ animationDelay: `${i * 0.1}s` }}>
-              {p.stub ? <CaseStudyStub p={p} /> : <CaseStudyFull p={p} />}
+            <div key={p.id} className="fade-in" style={{ animationDelay: `${i * 0.08}s` }}>
+              <ProjectCard p={p} />
             </div>
           ))}
         </div>

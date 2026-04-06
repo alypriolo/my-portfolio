@@ -1,5 +1,7 @@
 import './Hero.css'
 
+const BASE = import.meta.env.BASE_URL
+
 export default function Hero() {
   return (
     <section className="hero" id="hero">
@@ -16,7 +18,7 @@ export default function Hero() {
           <div className="hero__actions">
             <a href="#case-studies" className="btn btn-hero-primary">View My Work</a>
             <a
-              href="/Priolo_Alessandra_Resume.pdf"
+              href={`${BASE}Priolo_Alessandra_Resume_04_2026.pdf`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-hero-outline"

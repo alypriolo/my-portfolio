@@ -2,7 +2,6 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Mangomint from './components/Mangomint'
 import CaseStudies from './components/CaseStudies'
-import Research from './components/Research'
 import Skills from './components/Skills'
 import Personal from './components/Personal'
 import Contact from './components/Contact'
@@ -20,7 +19,6 @@ export default function App() {
         <Hero />
         <Mangomint />
         <CaseStudies />
-        <Research />
         <Skills />
         <Personal />
         <Contact />

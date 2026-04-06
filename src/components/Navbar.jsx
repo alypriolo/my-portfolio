@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import './Navbar.css'
 
+const BASE = import.meta.env.BASE_URL
+
 const links = [
-  { label: 'About', href: '#about' },
-  { label: 'Work', href: '#case-studies' },
+  { label: 'About', href: '#hero' },
+  { label: 'Work', href: '#mangomint' },
+  { label: 'Other Projects', href: '#case-studies' },
   { label: 'Skills', href: '#skills' },
   { label: 'Personal', href: '#personal' },
   { label: 'Contact', href: '#contact' },
@@ -36,7 +39,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="/Priolo_Alessandra_Resume.pdf"
+            href={`${BASE}Priolo_Alessandra_Resume_04_2026.pdf`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary navbar__cta"
