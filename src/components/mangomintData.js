@@ -30,7 +30,7 @@ export const featuredFeatures = [
       attribution: 'Mangomint customer case study',
     },
     announcementUrl: 'https://www.mangomint.com/updates/?page=10#introducing-automated-flows-in-mangomint',
-    screenshotFile: 'Screen Shot 2026-04-03 at 11.44.41 AM.jpg',
+    screenshotFile: 'flows-announcement.jpg',
   },
   {
     id: 'offers',
@@ -52,7 +52,7 @@ export const featuredFeatures = [
       attribution: 'Mangomint internal data',
     },
     announcementUrl: 'https://www.mangomint.com/updates/?page=9#offers-discounts',
-    screenshotFile: 'Screen Shot 2026-04-03 at 11.45.16 AM.jpg',
+    screenshotFile: 'offers-announcement.jpg',
   },
   {
     id: 'group-bookings',
@@ -74,7 +74,7 @@ export const featuredFeatures = [
       attribution: 'Mangomint customer feedback',
     },
     announcementUrl: 'https://www.mangomint.com/updates/?page=7#group-bookings-are-here',
-    screenshotFile: 'Screen Shot 2026-04-03 at 11.45.46 AM.jpg',
+    screenshotFile: 'group-bookings-announcement.jpg',
   },
 ]
 

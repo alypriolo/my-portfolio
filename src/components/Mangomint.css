@@ -576,7 +576,6 @@
 
 /* ─── Flip Cards ─────────────────────────────────────────────────────────────── */
 .flip-card {
-  perspective: 1000px;
   width: 256px;
   min-width: 256px;
   height: 340px;
@@ -587,29 +586,74 @@
   transition: transform 0.2s ease;
 }
 
+/* ── Desktop: full 3D flip ── */
+@media (hover: hover) {
+  .flip-card {
+    perspective: 1000px;
+  }
+
+  .flip-card__inner {
+    transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card--flipped .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card__front,
+  .flip-card__back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-card__back {
+    transform: rotateY(180deg) translateZ(0);
+  }
+}
+
+/* ── Mobile: fade swap, no 3D ── */
+@media (hover: none) {
+  .flip-card__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flip-card__back {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    transform: none;
+  }
+
+  .flip-card--flipped .flip-card__front {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .flip-card--flipped .flip-card__back {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
 .flip-card__inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-}
-
-.flip-card--flipped .flip-card__inner {
-  transform: rotateY(180deg);
 }
 
 .flip-card__front,
 .flip-card__back {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   border-radius: var(--radius-lg);
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transform: translateZ(0); /* Safari fix */
 }
 
 /* Desktop-only hover scale — excluded from touch devices */
@@ -629,7 +673,6 @@
 .flip-card__back {
   background: rgba(111, 183, 219, 0.06);
   border: 1px solid rgba(111, 183, 219, 0.18);
-  transform: rotateY(180deg) translateZ(0);
   gap: 10px;
   overflow-y: auto;
 }
