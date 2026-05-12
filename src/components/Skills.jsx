@@ -29,17 +29,7 @@ const skillGroups = [
       'Stakeholder Management',
       'Feature Prioritization',
       'OKRs & KPI Tracking',
-    ],
-  },
-  {
-    category: 'QA & Testing',
-    icon: '✅',
-    skills: [
-      'Quality Assurance',
-      'Beta Testing',
-      'User Acceptance Testing',
-      'Bug Tracking',
-      'Test Case Writing',
+      'QA & Testing',
     ],
   },
   {
@@ -72,10 +62,6 @@ const skillGroups = [
     muted: true,
     skills: [
       'React',
-      'React Native',
-      'Node.js',
-      'Firebase',
-      'MongoDB',
       'JavaScript',
       'HTML / CSS',
       'Git / GitHub',

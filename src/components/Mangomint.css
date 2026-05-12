@@ -513,8 +513,38 @@
 
 .mm-carousel__controls {
   display: flex;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+}
+
+.mm-carousel__counter {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(253, 249, 245, 0.35);
+  letter-spacing: 0.06em;
+  margin-left: 6px;
+}
+
+.mm-carousel__counter-sep {
+  opacity: 0.5;
+}
+
+.mm-carousel__progress-wrap {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.mm-carousel__progress-bar {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 2px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s ease;
 }
 
 .mm-carousel__btn {
@@ -667,12 +697,14 @@
 .flip-card__front {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 2px solid var(--cat-color, var(--color-accent));
   gap: 10px;
 }
 
 .flip-card__back {
-  background: rgba(111, 183, 219, 0.06);
-  border: 1px solid rgba(111, 183, 219, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 2px solid var(--cat-color, var(--color-accent));
   gap: 10px;
   overflow-y: auto;
 }
@@ -682,8 +714,8 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-accent);
-  opacity: 0.75;
+  color: var(--cat-color, var(--color-accent));
+  opacity: 0.9;
 }
 
 .flip-card__category--back {
@@ -772,7 +804,7 @@
   font-family: var(--font-display);
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--color-accent);
+  color: var(--cat-color, var(--color-accent));
   line-height: 1;
 }
 

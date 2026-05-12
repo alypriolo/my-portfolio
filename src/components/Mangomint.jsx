@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import './Mangomint.css'
 import { overviewStats, featuredFeatures, carouselFeatures } from './mangomintData'
+import { useScrollLock } from '../hooks/useScrollLock'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -16,6 +17,7 @@ function useCountUp(target, duration = 1200) {
   useEffect(() => {
     const el = elRef.current
     if (!el) return
+    let rafId
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return
@@ -26,15 +28,18 @@ function useCountUp(target, duration = 1200) {
           const progress = Math.min(elapsed / duration, 1)
           const eased = 1 - Math.pow(1 - progress, 3)
           setCount(Math.floor(eased * target))
-          if (progress < 1) requestAnimationFrame(tick)
+          if (progress < 1) rafId = requestAnimationFrame(tick)
           else setCount(target)
         }
-        requestAnimationFrame(tick)
+        rafId = requestAnimationFrame(tick)
       },
       { threshold: 0.5 }
     )
     observer.observe(el)
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(rafId)
+    }
   }, [target, duration])
 
   return { count, elRef }
@@ -97,28 +102,7 @@ function AnnouncementEmbed({ url, screenshotFile }) {
 }
 
 function FeatureModal({ feature, onClose }) {
-  const scrollYRef = useRef(0)
-
-  useEffect(() => {
-    // iOS-safe scroll lock
-    scrollYRef.current = window.scrollY
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
-    document.body.style.top = `-${scrollYRef.current}px`
-    document.body.style.overflow = 'hidden'
-
-    const onKey = (e) => e.key === 'Escape' && onClose()
-    window.addEventListener('keydown', onKey)
-
-    return () => {
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      document.body.style.overflow = ''
-      window.scrollTo(0, scrollYRef.current)
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [onClose])
+  useScrollLock(onClose)
 
   return (
     <div className="mm-modal-backdrop" onClick={onClose}>
@@ -206,6 +190,23 @@ function FeaturedCard({ feature, onOpen, index }) {
   )
 }
 
+// ─── Category colour map ──────────────────────────────────────────────────────
+const CATEGORY_COLORS = {
+  'Memberships':     '#c084fc',
+  'Flows':           '#6FB7DB',
+  'Gift Cards':      '#fbbf24',
+  'Payroll':         '#34d399',
+  'Forms':           '#fb923c',
+  'Reporting':       '#a78bfa',
+  'Online Booking':  '#22d3ee',
+  'Platform':        '#94a3b8',
+  'Marketing':       '#f472b6',
+  'Payments':        '#f87171',
+  'Offers':          '#d97706',
+  'Scheduling':      '#a3e635',
+  'Retention':       '#2dd4bf',
+}
+
 // ─── CarouselCard (flip card) ─────────────────────────────────────────────────
 function CarouselCard({ feature, isFlipped, onFlip }) {
   const touchStartX = useRef(null)
@@ -221,9 +222,12 @@ function CarouselCard({ feature, isFlipped, onFlip }) {
     if (delta < 8) onFlip() // only flip on tap, not swipe
   }
 
+  const catColor = CATEGORY_COLORS[feature.category] || '#6FB7DB'
+
   return (
     <div
       className={`flip-card${isFlipped ? ' flip-card--flipped' : ''}`}
+      style={{ '--cat-color': catColor }}
       onClick={onFlip}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
@@ -281,25 +285,41 @@ function CarouselCard({ feature, isFlipped, onFlip }) {
 // ─── Carousel ─────────────────────────────────────────────────────────────────
 function Carousel() {
   const [flippedIds, setFlippedIds] = useState(new Set())
-  const [canPrev, setCanPrev] = useState(false)
-  const [canNext, setCanNext] = useState(true)
+  const [scrollLeft, setScrollLeft] = useState(0)
   const trackRef = useRef(null)
-  const SCROLL_STEP = 280 * 2 // 2 cards at a time
+  // 256px matches .flip-card width; 16px matches .mm-carousel__track gap
+  const CARD_WIDTH = 256 + 16
+  const SCROLL_STEP = CARD_WIDTH * 2
+  const total = carouselFeatures.length
 
-  const updateButtons = useCallback(() => {
+  const updateState = useCallback(() => {
     const t = trackRef.current
     if (!t) return
-    setCanPrev(t.scrollLeft > 4)
-    setCanNext(t.scrollLeft + t.clientWidth < t.scrollWidth - 4)
+    setScrollLeft(t.scrollLeft)
   }, [])
 
   useEffect(() => {
     const t = trackRef.current
     if (!t) return
-    t.addEventListener('scroll', updateButtons, { passive: true })
-    updateButtons()
-    return () => t.removeEventListener('scroll', updateButtons)
-  }, [updateButtons])
+    let rafId
+    const onScroll = () => {
+      cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(updateState)
+    }
+    t.addEventListener('scroll', onScroll, { passive: true })
+    updateState()
+    return () => {
+      t.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
+    }
+  }, [updateState])
+
+  const track = trackRef.current
+  const maxScroll = track ? track.scrollWidth - track.clientWidth : 1
+  const canPrev = scrollLeft > 4
+  const canNext = track ? scrollLeft + track.clientWidth < track.scrollWidth - 4 : true
+  const progress = maxScroll > 0 ? scrollLeft / maxScroll : 0
+  const visibleIdx = Math.min(Math.round(scrollLeft / CARD_WIDTH) + 1, total)
 
   const handleFlip = (id) => setFlippedIds((prev) => {
     const next = new Set(prev)
@@ -313,19 +333,15 @@ function Carousel() {
   return (
     <div className="mm-carousel">
       <div className="mm-carousel__controls">
-        <button
-          className="mm-carousel__btn"
-          onClick={scrollPrev}
-          disabled={!canPrev}
-          aria-label="Previous"
-        >←</button>
-        <button
-          className="mm-carousel__btn"
-          onClick={scrollNext}
-          disabled={!canNext}
-          aria-label="Next"
-        >→</button>
+        <button className="mm-carousel__btn" onClick={scrollPrev} disabled={!canPrev} aria-label="Previous">←</button>
+        <button className="mm-carousel__btn" onClick={scrollNext} disabled={!canNext} aria-label="Next">→</button>
+        <span className="mm-carousel__counter">{visibleIdx} <span className="mm-carousel__counter-sep">/</span> {total}</span>
       </div>
+
+      <div className="mm-carousel__progress-wrap">
+        <div className="mm-carousel__progress-bar" style={{ transform: `scaleX(${progress})` }} />
+      </div>
+
       <div className="mm-carousel__track-wrap">
         <div className="mm-carousel__track" ref={trackRef}>
           {carouselFeatures.map((f) => (
@@ -347,8 +363,8 @@ export default function Mangomint() {
   const sectionRef = useRef(null)
   const [activeFeature, setActiveFeature] = useState(null)
 
-  const handleOpen = useCallback((feature) => setActiveFeature(feature), [])
-  const handleClose = useCallback(() => setActiveFeature(null), [])
+  const handleOpen = (feature) => setActiveFeature(feature)
+  const handleClose = () => setActiveFeature(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(

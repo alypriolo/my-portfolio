@@ -84,6 +84,45 @@ export const featuredFeatures = [
 export const carouselFeatures = [
   // ── WITH announcement links ────────────────────────────────────────────────
   {
+    id: 'cluster-booking',
+    name: 'Smarter Gap Avoidance via Cluster Booking',
+    category: 'Online Booking',
+    emoji: '📅',
+    problem: 'Businesses had limited control over how gaps formed between appointments in online booking, leading to inefficient schedules full of dead time that required manual rearranging.',
+    howItWorks: 'New controls let admins set gap size thresholds (e.g. no gaps larger than 1hr or smaller than 15min), choose whether empty days offer all available times or only first/last slot per shift, and decide if multi-provider bookings can allow gaps to increase availability. Times adjacent to existing appointments are always offered regardless of settings.',
+    metrics: [
+      { value: 'May 2026', label: 'Launch date' },
+    ],
+    quote: null,
+    announcementUrl: 'https://www.mangomint.com/updates/#avoiding-gaps-just-got-smarter',
+  },
+  {
+    id: 'hide-prices-online-booking',
+    name: 'Hide Prices in Online Booking',
+    category: 'Online Booking',
+    emoji: '🙈',
+    problem: 'Businesses with variable pricing or consultation-first services had no way to suppress prices in online booking — clients would see a price that didn\'t reflect what they\'d actually pay.',
+    howItWorks: 'Per-service setting in the Online Booking tab with two options: "Show minimum price" (existing $100+ behavior) or "Hide price entirely." Configured in Services → select service → Online Booking → Edit → Customize price display.',
+    metrics: [
+      { value: 'Apr 2026', label: 'Launch date' },
+    ],
+    quote: null,
+    announcementUrl: 'https://www.mangomint.com/updates/#hide-prices-for-individual-services-in-online-booking',
+  },
+  {
+    id: 'update-client-details',
+    name: 'Update Client Details from Appointment',
+    category: 'Platform',
+    emoji: '✏️',
+    problem: 'When a client entered different information in online booking than what was in their profile, staff had to navigate away from the appointment to manually reconcile the discrepancy in the client record.',
+    howItWorks: 'A yellow disclaimer appears in the appointment details when online booking info differs from the client profile. Staff can tap "Update client details," review the diff field-by-field, selectively accept changes, and save — all without leaving the appointment.',
+    metrics: [
+      { value: 'Apr 2026', label: 'Launch date' },
+    ],
+    quote: null,
+    announcementUrl: 'https://www.mangomint.com/updates/#keep-client-details-up-to-date',
+  },
+  {
     id: 'rebooking',
     name: 'Internal Rebooking',
     category: 'Retention',
@@ -93,6 +132,7 @@ export const carouselFeatures = [
     metrics: [
       { value: '37,284', label: 'Rebookings in 4 weeks' },
       { value: '53.4%',  label: 'Company adoption' },
+      { value: 'Mar 2026', label: 'Launch date' },
     ],
     quote: '"This was the one feature that when I joined Mangomint 4 years ago I could not comprehend why we didn\'t have it." — Mere Brooks (Support)',
     announcementUrl: 'https://www.mangomint.com/updates/#rebook-appointments-in-seconds',

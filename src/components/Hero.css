@@ -1,5 +1,6 @@
 .hero {
   min-height: 100vh;
+  min-height: 100svh;
   background: radial-gradient(
     ellipse 50% 80% at 62% 62%,
     #bde3f5 0%,
