@@ -3,6 +3,7 @@ import './Personal.css'
 import { useScrollLock } from '../hooks/useScrollLock'
 
 const BASE = import.meta.env.BASE_URL
+const THUMBS_PER_PAGE = 2
 
 function photoSrc(folder, file) {
   return `${BASE}${['portfolio pictures', folder, file].map(encodeURIComponent).join('/')}`
@@ -14,7 +15,7 @@ const albums = [
     label: 'Vanderbilt University',
     caption: 'I attended Vanderbilt University and studied Computer Science with a minor in business. While there, I was a member of Change++ org and Delta Sigma Pi.',
     folder: 'vandy',
-    heroIndex: 0,
+    heroIndex: 1,
     items: [
       { file: 'IMG_7381.JPG', type: 'image' },
       { file: 'IMG_8403.jpeg', type: 'image' },
@@ -63,13 +64,12 @@ const albums = [
     label: 'Skiing',
     caption: 'My favorite way to spend my free time is by getting outside and skiing.',
     folder: 'skiing',
-    heroIndex: 2,
+    heroIndex: 4,
     items: [
       { file: 'IMG_1074.jpg', type: 'image' },
       { file: 'IMG_6174.jpg', type: 'image' },
       { file: 'IMG_6623.jpg', type: 'image' },
-      { file: 'IMG_6682.jpg', type: 'image' },
-      { file: 'IMG_6918.jpg', type: 'image' },
+      { file: 'IMG_6918.jpg', type: 'image', objectPosition: 'center 20%' },
       { file: '71BB0156-6DC6-4913-9950-AA852CD1772B.JPG', type: 'image' },
     ],
   },
@@ -206,12 +206,15 @@ function PersonalChapter({ album, index, onExpand }) {
     return () => observer.disconnect()
   }, [])
 
+  const [thumbPage, setThumbPage] = useState(0)
+
   const heroIdx = album.heroIndex ?? 0
   const heroItem = album.items[heroIdx]
-  const thumbItems = album.items
-    .filter((_, i) => i !== heroIdx)
-    .slice(0, 3)
-  const extraCount = Math.max(0, album.items.length - 1 - 3)
+  const allThumbs = album.items.filter((_, i) => i !== heroIdx)
+  const totalPages = Math.ceil(allThumbs.length / THUMBS_PER_PAGE)
+  const visibleThumbs = allThumbs.slice(thumbPage * THUMBS_PER_PAGE, (thumbPage + 1) * THUMBS_PER_PAGE)
+  const hasNext = thumbPage < totalPages - 1
+  const hasPrev = thumbPage > 0
 
   const chapterNum = String(index + 1).padStart(2, '0')
 
@@ -228,7 +231,6 @@ function PersonalChapter({ album, index, onExpand }) {
         <div className="personal-chapter__expand-hint">click to expand ↗</div>
       </div>
 
-      {/* ── Content side ── */}
       <div className="personal-chapter__content">
         <div className="personal-chapter__text" data-num={chapterNum}>
           <div className="personal-chapter__eyebrow">
@@ -238,23 +240,33 @@ function PersonalChapter({ album, index, onExpand }) {
           <TypewriterCaption text={album.caption} />
         </div>
 
-        {thumbItems.length > 0 && (
+        {visibleThumbs.length > 0 && (
           <div className="personal-chapter__thumbs">
-            {thumbItems.map((item, i) => {
-              const isLast = i === thumbItems.length - 1
-              return (
-                <div
-                  key={item.file}
-                  className="personal-chapter__thumb"
-                  onClick={() => onExpand({ item, albumFolder: album.folder })}
-                >
-                  <MediaItem item={item} folder={album.folder} className="personal-chapter__thumb-media" lazy />
-                  {isLast && extraCount > 0 && (
-                    <div className="personal-chapter__thumb-count">+{extraCount}</div>
-                  )}
-                </div>
-              )
-            })}
+            {visibleThumbs.map((item) => (
+              <div
+                key={item.file}
+                className="personal-chapter__thumb"
+                onClick={() => onExpand({ item, albumFolder: album.folder })}
+              >
+                <MediaItem item={item} folder={album.folder} className="personal-chapter__thumb-media" lazy />
+              </div>
+            ))}
+            {(hasPrev || hasNext) && (
+              <div className="personal-chapter__thumb-nav">
+                <button
+                  className="personal-chapter__thumb-arrow"
+                  onClick={(e) => { e.stopPropagation(); setThumbPage((p) => p - 1) }}
+                  aria-label="Previous photos"
+                  disabled={!hasPrev}
+                >←</button>
+                <button
+                  className="personal-chapter__thumb-arrow"
+                  onClick={(e) => { e.stopPropagation(); setThumbPage((p) => p + 1) }}
+                  aria-label="Next photos"
+                  disabled={!hasNext}
+                >→</button>
+              </div>
+            )}
           </div>
         )}
       </div>

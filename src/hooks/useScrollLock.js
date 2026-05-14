@@ -1,29 +1,28 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Locks body scroll (iOS-safe: position:fixed trick) while mounted.
- * Restores scroll position and calls onClose on Escape key.
+ * Prevents background scroll while a modal/lightbox is open.
+ * Uses overflow:hidden (no scroll-position change) to avoid the
+ * position:fixed flash-to-top bug on close.
+ * Calls onClose on Escape key.
  */
 export function useScrollLock(onClose) {
-  const scrollYRef = useRef(0)
+  const onCloseRef = useRef(onClose)
+  useEffect(() => { onCloseRef.current = onClose }, [onClose])
 
   useEffect(() => {
-    scrollYRef.current = window.scrollY
-    document.body.style.position = 'fixed'
-    document.body.style.width = '100%'
-    document.body.style.top = `-${scrollYRef.current}px`
+    const prevOverflow = document.body.style.overflow
+    const prevTouchAction = document.body.style.touchAction
     document.body.style.overflow = 'hidden'
+    document.body.style.touchAction = 'none' // blocks iOS scroll-through
 
-    const onKey = (e) => e.key === 'Escape' && onClose()
+    const onKey = (e) => e.key === 'Escape' && onCloseRef.current()
     window.addEventListener('keydown', onKey)
 
     return () => {
-      document.body.style.position = ''
-      document.body.style.width = ''
-      document.body.style.top = ''
-      document.body.style.overflow = ''
-      window.scrollTo(0, scrollYRef.current)
+      document.body.style.overflow = prevOverflow
+      document.body.style.touchAction = prevTouchAction
       window.removeEventListener('keydown', onKey)
     }
-  }, [onClose])
+  }, [])
 }
