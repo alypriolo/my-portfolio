@@ -436,8 +436,7 @@ export default function CaseStudies() {
     <section className="case-studies" id="case-studies" ref={ref}>
       <div className="container">
         <div className="case-studies__header fade-in">
-          <span className="section-label">Projects</span>
-          <h2 className="section-title">Products I've built</h2>
+          <h2 className="section-title">Projects</h2>
           <p className="section-subtitle">
             From mobile apps to web platforms, here's how I take ideas from discovery to launch.
           </p>
