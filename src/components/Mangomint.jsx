@@ -209,19 +209,6 @@ const CATEGORY_COLORS = {
 
 // ─── CarouselCard (flip card) ─────────────────────────────────────────────────
 function CarouselCard({ feature, isFlipped, onFlip }) {
-  const touchStartX = useRef(null)
-
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current === null) return
-    const delta = Math.abs(e.changedTouches[0].clientX - touchStartX.current)
-    touchStartX.current = null
-    if (delta < 8) onFlip() // only flip on tap, not swipe
-  }
-
   const catColor = CATEGORY_COLORS[feature.category] || '#6FB7DB'
 
   return (
@@ -229,8 +216,6 @@ function CarouselCard({ feature, isFlipped, onFlip }) {
       className={`flip-card${isFlipped ? ' flip-card--flipped' : ''}`}
       style={{ '--cat-color': catColor }}
       onClick={onFlip}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && onFlip()}
@@ -251,8 +236,6 @@ function CarouselCard({ feature, isFlipped, onFlip }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                onTouchStart={(e) => e.stopPropagation()}
-                onTouchEnd={(e) => e.stopPropagation()}
               >
                 View announcement ↗
               </a>
