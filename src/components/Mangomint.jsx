@@ -251,6 +251,8 @@ function CarouselCard({ feature, isFlipped, onFlip }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                onTouchEnd={(e) => e.stopPropagation()}
               >
                 View announcement ↗
               </a>
