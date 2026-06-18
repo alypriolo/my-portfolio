@@ -211,7 +211,7 @@ a {
    ============================= */
 
 /* All sections need relative positioning for the ::after overlays */
-.hero, .about, .mangomint, .case-studies, .research, .skills, .personal, .contact {
+.hero, .about, .mangomint, .case-studies, .research, .skills, .what-i-offer, .personal, .contact {
   position: relative;
 }
 
@@ -221,6 +221,7 @@ a {
 .case-studies::after,
 .research::after,
 .skills::after,
+.what-i-offer::after,
 .personal::after {
   content: '';
   position: absolute;
@@ -231,40 +232,46 @@ a {
   z-index: 2;
 }
 
-/* Hero (bg #fdf9f5) → Mangomint (bg-dark #1a110a) */
+/* Hero (bg) → Mangomint (bg-dark) */
 .hero::after {
   height: 60px;
-  background: linear-gradient(to bottom, transparent, #1a110a);
+  background: linear-gradient(to bottom, transparent, var(--color-bg-dark));
 }
 
-/* Mangomint (bg-dark #1a110a) → CaseStudies (bg #fdf9f5) */
+/* Mangomint (bg-dark) → CaseStudies (bg) */
 .mangomint::after {
   height: 60px;
-  background: linear-gradient(to bottom, transparent, #fdf9f5);
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
 }
 
-/* CaseStudies (bg #fdf9f5) → Research (bg-alt #ffffff) */
+/* CaseStudies (bg) → WhatIOffer (bg-alt) */
 .case-studies::after {
   height: 40px;
-  background: linear-gradient(to bottom, transparent, #ffffff);
+  background: linear-gradient(to bottom, transparent, var(--color-bg-alt));
 }
 
-/* Research (bg-alt #ffffff) → Skills (bg-dark #1a110a) */
+/* Research (bg-alt) → Skills (bg-dark) */
 .research::after {
   height: 60px;
-  background: linear-gradient(to bottom, transparent, #1a110a);
+  background: linear-gradient(to bottom, transparent, var(--color-bg-dark));
 }
 
-/* Skills (bg-dark #1a110a) → Personal (bg-alt #ffffff) */
+/* WhatIOffer (bg-alt) → Skills (bg-dark) */
+.what-i-offer::after {
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg-dark));
+}
+
+/* Skills (bg-dark) → Personal (bg-alt) */
 .skills::after {
   height: 60px;
-  background: linear-gradient(to bottom, transparent, #ffffff);
+  background: linear-gradient(to bottom, transparent, var(--color-bg-alt));
 }
 
-/* Personal (bg-alt #ffffff) → Contact (bg-dark #1a110a) */
+/* Personal (bg-alt) → Contact (bg-dark) */
 .personal::after {
   height: 60px;
-  background: linear-gradient(to bottom, transparent, #1a110a);
+  background: linear-gradient(to bottom, transparent, var(--color-bg-dark));
 }
 
 /* =============================

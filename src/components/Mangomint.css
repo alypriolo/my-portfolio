@@ -108,6 +108,29 @@
   margin-bottom: 24px;
 }
 
+.mm-section-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.mm-section-heading-row .mm-section-heading {
+  margin-bottom: 0;
+}
+
+.mm-launches-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: rgba(111, 183, 219, 0.12);
+  border: 1px solid rgba(111, 183, 219, 0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+
 /* ─── Stats Bar ─────────────────────────────────────────────────────────────── */
 .mm-stats-bar {
   margin-bottom: 64px;
@@ -502,7 +525,7 @@
 .mm-carousel-section__sub {
   font-size: 0.875rem;
   color: rgba(253, 249, 245, 0.35);
-  margin-top: -16px;
+  margin-top: 8px;
   margin-bottom: 28px;
   font-style: italic;
 }

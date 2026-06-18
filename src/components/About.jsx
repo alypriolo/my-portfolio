@@ -1,17 +1,8 @@
-import { useEffect, useRef } from 'react'
 import './About.css'
+import { useFadeIn } from '../hooks/useFadeIn'
 
 export default function About() {
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.toggle('visible', e.isIntersecting)),
-      { threshold: 0.15 }
-    )
-    ref.current?.querySelectorAll('.fade-in').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  const ref = useFadeIn(0.15)
 
   return (
     <section className="about" id="about" ref={ref}>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import './Mangomint.css'
-import { overviewStats, featuredFeatures, carouselFeatures } from './mangomintData'
+import { featuredFeatures, carouselFeatures } from './mangomintData'
 import { useScrollLock } from '../hooks/useScrollLock'
 
 const BASE = import.meta.env.BASE_URL
@@ -9,73 +9,6 @@ function announcementSrc(file) {
   return `${BASE}${['portfolio pictures', 'announcements', file].map(encodeURIComponent).join('/')}`
 }
 
-// ─── useCountUp ────────────────────────────────────────────────────────────────
-function useCountUp(target, duration = 1200) {
-  const [count, setCount] = useState(0)
-  const elRef = useRef(null)
-
-  useEffect(() => {
-    const el = elRef.current
-    if (!el) return
-    let rafId
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-        observer.disconnect()
-        const start = performance.now()
-        const tick = (now) => {
-          const elapsed = now - start
-          const progress = Math.min(elapsed / duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 3)
-          setCount(Math.floor(eased * target))
-          if (progress < 1) rafId = requestAnimationFrame(tick)
-          else setCount(target)
-        }
-        rafId = requestAnimationFrame(tick)
-      },
-      { threshold: 0.5 }
-    )
-    observer.observe(el)
-    return () => {
-      observer.disconnect()
-      cancelAnimationFrame(rafId)
-    }
-  }, [target, duration])
-
-  return { count, elRef }
-}
-
-// ─── StatItem ─────────────────────────────────────────────────────────────────
-function StatItem({ stat }) {
-  const { count, elRef } = useCountUp(stat.isCounter ? stat.value : 0)
-
-  const display = stat.isCounter
-    ? `${stat.prefix ?? ''}${count}${stat.suffix}`
-    : stat.display
-
-  return (
-    <div className="mm-stat" ref={elRef}>
-      <span className="mm-stat__value">{display}</span>
-      <span className="mm-stat__label">{stat.label}</span>
-    </div>
-  )
-}
-
-// ─── StatsBar ─────────────────────────────────────────────────────────────────
-function StatsBar() {
-  return (
-    <div className="mm-stats-bar fade-in">
-      <div className="mm-stats-bar__chips">
-        {overviewStats.map((stat, i) => (
-          <StatItem key={i} stat={stat} />
-        ))}
-      </div>
-      <p className="mm-stats-bar__descriptor">
-        50+ launches spanning Flows, Memberships, Payroll, Gift Cards, Offers, Payments, Forms, and Online Booking — November 2023 through March 2026.
-      </p>
-    </div>
-  )
-}
 
 // ─── FeatureModal ─────────────────────────────────────────────────────────────
 function AnnouncementEmbed({ url, screenshotFile }) {
@@ -375,19 +308,19 @@ export default function Mangomint() {
             <span className="mangomint__company-badge">Mangomint</span>
             <span className="mangomint__role-pill">Product Manager · Nov 2023–Present</span>
           </div>
-          <h2 className="mangomint__title">Two years of shipping in production</h2>
+          <h2 className="mangomint__title">Features I've Built as a PM at a SaaS Startup</h2>
           <p className="mangomint__subtitle">
             Sole PM across two product teams at a leading salon &amp; spa software platform —
             owning strategy, discovery, and delivery from 0 to launch.
           </p>
         </div>
 
-        {/* Stats Bar */}
-        <StatsBar />
-
         {/* Featured launches */}
         <div className="mm-featured fade-in">
-          <h3 className="mm-section-heading">Featured launches</h3>
+          <div className="mm-section-heading-row">
+            <h3 className="mm-section-heading">Featured launches</h3>
+            <span className="mm-launches-badge">60+ features launched 0&#8594;1</span>
+          </div>
           <div className="mm-featured__grid">
             {featuredFeatures.map((f, i) => (
               <FeaturedCard key={f.id} feature={f} onOpen={handleOpen} index={i} />

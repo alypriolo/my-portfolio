@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react'
 import './Skills.css'
+import { useFadeIn } from '../hooks/useFadeIn'
 
 const skillGroups = [
   {
@@ -70,16 +70,7 @@ const skillGroups = [
 ]
 
 export default function Skills() {
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.toggle('visible', e.isIntersecting)),
-      { threshold: 0.1 }
-    )
-    ref.current?.querySelectorAll('.fade-in').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  const ref = useFadeIn()
 
   return (
     <section className="skills" id="skills" ref={ref}>

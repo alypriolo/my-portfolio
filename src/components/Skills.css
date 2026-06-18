@@ -53,11 +53,6 @@
   color: #e8c49a;
 }
 
-.skill-group--featured .skill-chip:hover {
-  background: var(--color-accent-brown);
-  color: #fff;
-  border-color: var(--color-accent-brown);
-}
 
 .skill-group--muted {
   opacity: 0.55;
@@ -101,12 +96,6 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 5px 12px;
   border-radius: 20px;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
-}
-.skill-chip:hover {
-  background: rgba(111, 183, 219, 0.2);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
 }
 
 @media (max-width: 860px) {
